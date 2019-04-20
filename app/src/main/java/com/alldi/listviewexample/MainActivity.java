@@ -1,23 +1,27 @@
 package com.alldi.listviewexample;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.alldi.listviewexample.com.alldi.adapters.StoreAdapter;
 import com.alldi.listviewexample.com.alldi.datas.Store;
+import com.alldi.listviewexample.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActivityMainBinding act;
     List<Store> myStoreList = new ArrayList<>();
-    ListView storeListView;
+    StoreAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        act = DataBindingUtil.setContentView(this, R.layout.activity_main);
         bindViews();
         setupEvents();
         setValues();
@@ -25,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     void setValues(){
         fillStores();
+        myAdapter = new StoreAdapter(MainActivity.this, myStoreList);
+        act.storeListView.setAdapter(myAdapter);
+        act.appNameTxt.setText("배달의 민족");
     }
 
     void setupEvents(){
@@ -32,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void bindViews(){
-        storeListView = findViewById(R.id.storeListView);
+
     }
 
     void fillStores(){
